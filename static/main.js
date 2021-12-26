@@ -15,7 +15,7 @@ window.onload = () => { // When Window load
 
 var peer = new Peer(undefined, { // Now with our peer server up an running, let's connect our cient peer js to ther server
     secure:true,
-    host: "https://zeem.herokuapp.com/",
+    host: "https://zeem.herokuapp.com",
     port: 443,
 });
 
