@@ -92,6 +92,7 @@ socket.on("AddName", (username) => { // Tell other user their name
 
 const RemoveUnusedDivs = () => { // This function is used to remove unused divs whenever if it is there
     //
+    console.log('remove')
     alldivs = videoGrids.getElementsByTagName("div"); // Get all divs in our video area
     for (var i = 0; i < alldivs.length; i++) { // loop through all the divs
         e = alldivs[i].getElementsByTagName("video").length; // Check if there is a video elemnt in each of the div
@@ -158,6 +159,7 @@ const showchat = () => { // Show chat window or not
 };
 
 const addVideoStream = (videoEl, stream, name) => {
+    console.log('called');
     videoEl.srcObject = stream; // Set the stream to the video element that we passed as arguments
     videoEl.addEventListener("loadedmetadata", () => { // When all the metadata has been loaded
         videoEl.play(); // Play the video
@@ -172,6 +174,7 @@ const addVideoStream = (videoEl, stream, name) => {
     videoGrid.append(videoEl); // append the video element to the the div "videoGrid"
     RemoveUnusedDivs(); // Remove all unsed divs
     let totalUsers = document.getElementsByTagName("video").length; // Get all video elemets
+    console.log(totalUsers, 'tu');
     if (totalUsers > 1) { // If more users than 1
         for (let index = 0; index < totalUsers; index++) { // loop through all videos
             document.getElementsByTagName("video")[index].style.width = // Set the width of each video to
