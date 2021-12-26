@@ -41,23 +41,22 @@ app.get("/join/:rooms", (req, res) => { // When we reach here after we get redir
 }); // i.e we need the roomid and the username
 
 io.on("connection", (socket) => { // When a user coonnects to our server
-    socket.on("join-room", (roomId, id, myname) => { // When the socket a event 'join room' event
-        socket.join(roomId); // Join the roomid
-        socket.to(roomId).broadcast.emit("user-connected", id, myname);// emit a 'user-connected' event to tell all the other users
+    socket.on("join-room", (data) => { // When the socket a event 'join room' event
+        socket.join(data.roomId); // Join the roomid
+        socket.to(data.roomId).emit("user-connected", data.id, data.myname);// emit a 'user-connected' event to tell all the other users
         // in that room that a new user has joined
 
         socket.on("messagesend", (message) => {
             console.log(message);
-            io.to(roomId).emit("createMessage", message);
+            io.to(data.roomId).emit("createMessage", message);
         });
 
         socket.on("tellName", (myname) => {
-            console.log(myname);
-            socket.to(roomId).broadcast.emit("AddName", myname);
+            socket.to(data.roomId).emit("AddName", myname);
         });
 
         socket.on("disconnect", () => { // When a user disconnects or leaves
-            socket.to(roomId).broadcast.emit("user-disconnected", id);
+            socket.to(data.roomId).emit("user-disconnected", data.id);
         });
     });
 });
